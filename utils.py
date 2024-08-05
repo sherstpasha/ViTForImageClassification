@@ -4,6 +4,7 @@ import numpy as np
 import torch
 from torch.nn import Module
 from PIL import Image
+from typing import Tuple
 
 
 # Определение трансформаций для изображений
@@ -28,7 +29,7 @@ def predict_image_class_binary(image_array: np.ndarray,
                                model: Module,
                                transforms: Compose,
                                device: torch.device,
-                               threshold: float = 0.5) -> int:
+                               threshold: float = 0.5) -> Tuple[int, float]:
     """
     Функция для предсказания бинарного класса изображения с использованием заданного порога вероятности.
 
@@ -43,7 +44,7 @@ def predict_image_class_binary(image_array: np.ndarray,
     :param threshold: Порог вероятности для классификации целевого класса.
                       Если вероятность целевого класса выше или равна этому порогу, класс будет считаться "1", иначе "0".
                       По умолчанию установлен на 0.5.
-    :return: Предсказанный класс изображения (0 или 1).
+    :return: Кортеж, содержащий предсказанный класс изображения (0 или 1) и вероятность целевого класса.
     """
     # Преобразование numpy массива в PIL Image
     image = Image.fromarray(image_array)
@@ -65,4 +66,5 @@ def predict_image_class_binary(image_array: np.ndarray,
     # Применение порога вероятности для определения класса
     predicted_class = 1 if probs[1] >= threshold else 0
     
-    return predicted_class
+    return predicted_class, probs[1]
+
