@@ -25,7 +25,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # Загрузка сохраненной модели
 # Мы используем модель ViT (Vision Transformer) для классификации изображений
 # Загрузите модель из указанного пути, где она была сохранена после обучения
-model = ViTForImageClassification.from_pretrained(r'C:\mvd_2classes\checkpoint-10000')
+model = ViTForImageClassification.from_pretrained(r'C:\checkpoint-10000')
 model.to(device)  # Перемещаем модель на GPU (или CPU, если GPU недоступен)
 model.eval()  # Переводим модель в режим оценки (inference)
 
